@@ -39,6 +39,6 @@ jobs:
           username: ${{ secrets.MAIL_USERNAME }}
           password: ${{ secrets.MAIL_PASSWORD }}
           subject: Github Actions job result
-          body: '${{ env.VERSION }} was successfully built.'
+          body: 'Nhi was successfully built.'
           to: ${{ vars.TO_EMAIL }}
           from: nhi

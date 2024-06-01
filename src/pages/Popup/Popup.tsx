@@ -7,7 +7,6 @@ const Popup = () => {
     <div className="app">
       <header className="app-header">健保文件</header>
       <Logo />
-
       <div
         style={{
           display: 'flex',

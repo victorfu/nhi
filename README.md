@@ -1,44 +1,106 @@
-Ponyta
-===
+# NHI
 
-### Dependencies
+## Installing and Running
 
-This project uses the following dependencies:
+### Procedures:
 
-- `next.js` - v9.3 or above required for **API Routes** and new [**new data fetching method**](https://nextjs.org/docs/basic-features/data-fetching#getserversideprops-server-side-rendering).
-- `react` - v16.8 or above required for **react hooks**.
-- `react-dom` - v16.8 or above.
-- `swr` - required for state management, may be replaced with `react-query`
-- `mongodb` - may be replaced by `mongoose`.
-- `passport`, `passport-local` - required for authentication.
-- `next-session`, `connect-mongo` - required for session, may be replaced with other session libraries such as `cookie-session`, `next-iron-session`, or `express-session` (`express-session` is observed not to work properly on Next.js 11+).
-- `bcryptjs` - optional, may be replaced with any password-hashing library. `argon2` recommended.
-- `validator` - optional but recommended, to validate email.
-- `ajv` - optional but recommended, to validate request body.
-- `multer` - may be replaced with any middleware that handles `multipart/form-data`
-- `cloudinary` - optional, **only if** you are using [Cloudinary](https://cloudinary.com) for image upload.
-- several other optional dependencies for cosmetic purposes.
-- `nodemailer` - optional, **only if** you use it for email. It is recommended to use 3rd party services like [Mailgun](https://www.mailgun.com/), [AWS SES](https://aws.amazon.com/ses/), etc. instead.
+1. Check if your [Node.js](https://nodejs.org/) version is >= **18**.
+2. Clone this repository.
+3. Change the package's `name`, `description`, and `repository` fields in `package.json`.
+4. Change the name of your extension on `src/manifest.json`.
+5. Run `npm install` to install the dependencies.
+6. Run `npm start`
+7. Load your extension on Chrome following:
+   1. Access `chrome://extensions/`
+   2. Check `Developer mode`
+   3. Click on `Load unpacked extension`
+   4. Select the `build` folder.
+8. Happy hacking.
 
-### Environmental variables
+## Structure
 
-Environmental variables in this project include:
+All your extension's code must be placed in the `src` folder.
 
-- `MONGODB_URI` The MongoDB Connection String (with credentials and database name)
-- `WEB_URI` The _URL_ of your web app.
-- `CLOUDINARY_URL` (optional, Cloudinary **only**) Cloudinary environment variable for configuration. See [this](https://cloudinary.com/documentation/node_integration#configuration).
-- `NODEMAILER_CONFIG` (optional, if using nodemailer **only**) JSON stringified nodemailer config. eg. `{"service":"Gmail","auth":{"user":"xxx@gmail.com","pass":""}}`
+The boilerplate is already prepared to have a popup, an options page, a background page, and a new tab page (which replaces the new tab page of your browser). But feel free to customize these.
 
-### Development
+## TypeScript
 
-Start the development server by running `yarn dev` or `npm run dev`. Getting started by create a `.env.local` file with the above variables. See [Environment Variables](https://nextjs.org/docs/basic-features/environment-variables).
+This boilerplate now supports TypeScript! The `Options` Page is implemented using TypeScript. Please refer to `src/pages/Options/` for example usages.
 
-This project can be deployed [anywhere Next.js can be deployed](https://nextjs.org/docs/deployment). Make sure to set the environment variables using the options provided by your cloud/hosting providers.
+## Webpack auto-reload and HRM
 
-After building using `npm run build`, simply start the server using `npm run start`.
+To make your workflow much more efficient this boilerplate uses the [webpack server](https://webpack.github.io/docs/webpack-dev-server.html) to development (started with `npm start`) with auto reload feature that reloads the browser automatically every time that you save some file in your editor.
 
-You can also deploy this with serverless providers given the correct setup.
+You can run the dev mode on other port if you want. Just specify the env var `port` like this:
 
-### License
+```
+$ PORT=6002 npm run start
+```
 
-[MIT](LICENSE)
+## Content Scripts
+
+Although this boilerplate uses the webpack dev server, it's also prepared to write all your bundles files on the disk at every code change, so you can point, on your extension manifest, to your bundles that you want to use as [content scripts](https://developer.chrome.com/extensions/content_scripts), but you need to exclude these entry points from hot reloading [(why?)](https://github.com/samuelsimoes/chrome-extension-webpack-boilerplate/issues/4#issuecomment-261788690). To do so you need to expose which entry points are content scripts on the `webpack.config.js` using the `chromeExtensionBoilerplate -> notHotReload` config. Look the example below.
+
+Let's say that you want use the `myContentScript` entry point as content script, so on your `webpack.config.js` you will configure the entry point and exclude it from hot reloading, like this:
+
+```js
+{
+  …
+  entry: {
+    myContentScript: "./src/js/myContentScript.js"
+  },
+  chromeExtensionBoilerplate: {
+    notHotReload: ["myContentScript"]
+  }
+  …
+}
+```
+
+and on your `src/manifest.json`:
+
+```json
+{
+  "content_scripts": [
+    {
+      "matches": ["https://www.google.com/*"],
+      "js": ["myContentScript.bundle.js"]
+    }
+  ]
+}
+```
+
+## Packing
+
+After the development of your extension run the command
+
+```
+$ NODE_ENV=production npm run build
+```
+
+Now, the content of `build` folder will be the extension ready to be submitted to the Chrome Web Store. Just take a look at the [official guide](https://developer.chrome.com/webstore/publish) to more infos about publishing.
+
+## Secrets
+
+If you are developing an extension that talks with some API you probably are using different keys for testing and production. Is a good practice you not commit your secret keys and expose to anyone that have access to the repository.
+
+To this task this boilerplate import the file `./secrets.<THE-NODE_ENV>.js` on your modules through the module named as `secrets`, so you can do things like this:
+
+_./secrets.development.js_
+
+```js
+export default { key: '123' };
+```
+
+_./src/popup.js_
+
+```js
+import secrets from 'secrets';
+ApiCall({ key: secrets.key });
+```
+
+:point_right: The files with name `secrets.*.js` already are ignored on the repository.
+
+## Resources:
+
+- [Webpack documentation](https://webpack.js.org/concepts/)
+- [Chrome Extension documentation](https://developer.chrome.com/extensions/getstarted)

@@ -4,17 +4,17 @@
 
 Follow these steps to install and run the Taiwan National Health Insurance Info Chrome extension:
 
-9. **Verify Node.js Version**: Ensure your [Node.js](https://nodejs.org/) version is 18 or higher.
-10. **Clone the Repository**: Clone this repository to your local machine.
-11. **Update Package Information**: Modify the `name`, `description`, and `repository` fields in the `package.json` file to reflect your project's details.
-12. **Update Extension Name**: Change the name of your extension in the `src/manifest.json` file.
-13. **Install Dependencies**: Run `npm install` to install all necessary dependencies.
-14. **Start Development Server**: Run `npm start` to start the development server.
-15. **Load Extension in Chrome**:
-    1. Navigate to `chrome://extensions/` in your Chrome browser.
-    2. Enable `Developer mode` by toggling the switch in the upper right corner.
-    3. Click on `Load unpacked` and select the `build` folder from your project directory.
-16. **Begin Development**: Your extension is now loaded and ready for development.
+1. **Verify Node.js Version**: Ensure your [Node.js](https://nodejs.org/) version is 18 or higher.
+2. **Clone the Repository**: Clone this repository to your local machine.
+3. **Update Package Information**: Modify the `name`, `description`, and `repository` fields in the `package.json` file to reflect your project's details.
+4. **Update Extension Name**: Change the name of your extension in the `src/manifest.json` file.
+5. **Install Dependencies**: Run `npm install` to install all necessary dependencies.
+6. **Start Development Server**: Run `npm start` to start the development server.
+7. **Load Extension in Chrome**:
+   1. Navigate to `chrome://extensions/` in your Chrome browser.
+   2. Enable `Developer mode` by toggling the switch in the upper right corner.
+   3. Click on `Load unpacked` and select the `build` folder from your project directory.
+8. **Begin Development**: Your extension is now loaded and ready for development.
 
 ## Webpack auto-reload and HRM
 

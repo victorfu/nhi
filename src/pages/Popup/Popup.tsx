@@ -25,7 +25,7 @@ const Popup = () => {
         </a>
         <a
           className="pdf-link"
-          href="https://kamaji.dentall.dev/2.0_1120831.pdf"
+          href="https://kamaji.dentall.dev/nhi2.pdf"
           target="_blank"
           rel="noreferrer"
         >

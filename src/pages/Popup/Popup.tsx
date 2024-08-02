@@ -55,6 +55,22 @@ const Popup = () => {
         >
           健保卡格式
         </a>
+        <a
+          className="pdf-link"
+          href="https://kamaji.dentall.dev/CSAPISpec.pdf"
+          target="_blank"
+          rel="noreferrer"
+        >
+          控制軟體API
+        </a>
+        <a
+          className="pdf-link"
+          href="https://kamaji.dentall.dev/guide.pdf"
+          target="_blank"
+          rel="noreferrer"
+        >
+          控制軟體安裝指引
+        </a>
       </div>
     </div>
   );

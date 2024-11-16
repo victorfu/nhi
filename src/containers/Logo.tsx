@@ -6,8 +6,8 @@ class Logo extends Component {
     return (
       <img
         style={{
-          width: '40px',
-          height: '40px',
+          width: '36px',
+          height: '36px',
         }}
         src={icon}
         alt="extension icon"

@@ -1,8 +1,22 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './Popup.css';
 import Logo from '../../containers/Logo';
 
+interface KamajiLink {
+  name: string;
+  url: string;
+}
+
 const Popup = () => {
+  const [links, setLinks] = useState<KamajiLink[]>([]);
+
+  useEffect(() => {
+    fetch('https://dentallio.github.io/totoro-fonts/links.json')
+      .then((res) => res.json())
+      .then(setLinks)
+      .catch(console.error);
+  }, []);
+
   return (
     <div className="app">
       <header className="app-header">健保文件</header>
@@ -15,7 +29,18 @@ const Popup = () => {
           justifyContent: 'center',
         }}
       >
-        <a
+        {links.map(({ name, url }) => (
+          <a
+            key={name}
+            className="pdf-link"
+            href={url}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {name}
+          </a>
+        ))}
+        {/* <a
           className="pdf-link"
           href="https://kamaji.dentall.dev/1.0_1110301.pdf"
           target="_blank"
@@ -70,7 +95,7 @@ const Popup = () => {
           rel="noreferrer"
         >
           控制軟體安裝指引
-        </a>
+        </a> */}
       </div>
     </div>
   );
